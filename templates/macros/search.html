@@ -1,0 +1,30 @@
+{# Выводит  #}
+{% macro filter(title, name, all_fields, fields_selected) %}
+    <details {% if fields_selected %}open{% endif %}>
+        <summary>{{ title }}</summary>
+        <div class="search-filter__group">
+            {% for i in all_fields.index %}
+                {% set cur = all_fields.loc[i] %}
+                <label>
+                    <input type="checkbox" name="{{ name }}[]" value="{{ cur['id'] }}"
+                            {% if cur['id'] in fields_selected %} checked {% endif %}
+                    />
+                    {{ cur['name'] }} ({{ cur['books_count'] }})
+                </label>
+            {% endfor %}
+        </div>
+    </details>
+{% endmacro %}
+
+{# Выводит результат фильтров красным цветом #}
+{% macro filtered_values(title, df_fields, fields_selected) %}
+    {% if fields_selected | length %}
+        <span class="bold">{{ title }}:</span>
+        {% for field in fields_selected %}
+            <span>
+                    {{ df_fields.loc[df_fields.id == field|int].name.item() }}{% if loop.last %}. {% else %}
+                        , {% endif %}
+                </span>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

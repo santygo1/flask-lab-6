@@ -1,0 +1,17 @@
+{% macro default(active) %}
+    <div class=menu>
+    <ul>
+        <li {% if active == 'reader' %} class=active {% endif %}><a href="{{ url_for('index') }}">Читатель</a></li>
+        <li>Книги</li>
+        <li>Статистика</li>
+    </ul>
+</div>
+{% endmacro %}
+
+{% macro menu_title(title) %}
+    <div class="menu">
+    <ul>
+        <li class="active">{{title}}</li>
+    </ul>
+    </div>
+{% endmacro %}

@@ -1,0 +1,11 @@
+{% macro readers_select(df_readers, cur_reader_id) %}
+    <select name="reader">
+        {% for i in  df_readers.index %}
+            {% set iter = df_readers.loc[i] %}
+            <option value="{{ iter['reader_id'] }}"
+                    {% if cur_reader_id == iter['reader_id'] %} selected {% endif %}>
+                {{ iter['reader_name'] }}
+            </option>
+        {% endfor %}
+    </select>
+{% endmacro %}

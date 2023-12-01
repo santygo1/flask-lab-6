@@ -1,0 +1,16 @@
+{% macro book(fields, book) %}
+    <div class="book">
+        {% for field in fields %}
+            <div class="book__field">
+                <p class="bold">{{ field }}:</p>
+                <p>{{ book[field] }}</p>
+            </div>
+        {% endfor %}
+        <form class="justify-end" action="{{ url_for('reader_borrow_book', reader_id = session['reader_id']) }}" method="POST">
+            <input type="hidden" name="book_id" value="{{ book['book_id'] }}">
+            <input type="submit" class="btn" value="Выбрать"
+                    {% if book['Количество'] == 0 %} disabled {% endif %}
+            />
+        </form>
+    </div>
+{% endmacro %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{# imports #}
+{% from 'macros/readers-select.html' import  readers_select %}
+{% from 'macros/render-table.html' import render_table %}
+
+{% block title %} Карточка читателя {% endblock title %}
+
+{% block menu %}{{ menu.default("reader") }}{% endblock menu %}
+{% block content %}
+    <form action='' method="get">
+        Читатель: {{ readers_select(combo_box, reader_id) }}
+        <input class="btn" type="submit" value="Найти">
+    </form>
+    <p><a class="btn" href="{{ url_for('create_reader_form') }}">Новый читатель</a></p>
+    {{ render_table("Карточка",book_reader, "book_reader_id") }}
+    <p><a class="btn" href="{{ url_for('search') }}">Взять книгу</a></p>
+{% endblock content %}

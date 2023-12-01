@@ -1,0 +1,38 @@
+{#  Макрос для вывода таблицы без ключевого столбца,переданного параметром  #}
+    {% macro render_table(table_name, relation, id) %}
+        <p>
+            <b>{{ table_name }}</b>
+        </p>
+        {% set n = relation | length %}
+        <table class="table">
+            <tr>
+                {% for name in relation.dtypes.index %}
+                    {% if name != id %}
+                        <th>{{ name }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tbody>
+
+            {% for i in range(n) %}
+                <tr>
+                    {% for name in relation.dtypes.index %}
+                        {% if name != id %}
+                            <td>
+                                {% if relation.loc[i][name] == None %}
+                                    <form action='{{ url_for('reader_return_book', reader_id=session['reader_id']) }}' method="post">
+                                        <input type="hidden" name="return"
+                                               value="{{ relation.loc[i]['book_reader_id'] }}">
+                                        <input type="submit" value="Сдать">
+                                    </form>
+                                {% else %}
+                                    {{ relation.loc[i][name] }}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endmacro %}

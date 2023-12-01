@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+{% import'macros/menu.html' as menu%}
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+    {% block links %}{% endblock links %}
+</head>
+
+<body>
+
+{% block menu %}
+{% endblock menu %}
+
+<div class="block">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+</body>
+
+</html>

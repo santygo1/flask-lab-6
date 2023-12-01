@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{# imports #}
+{% from 'macros/search.html' import filter, filtered_values %}
+{% from 'macros/book.html' import book %}
+
+{% block title %} Поиск книг {% endblock title %}
+
+{% block menu %}{{ menu.menu_title("Поиск книг") }}{% endblock menu %}
+{% block content %}
+    <div class="search-container">
+        <div class="search-filter">
+            <form>
+                {{ filter('Жанры', 'genre' ,df_genres, selected_genres) }}
+                {{ filter("Авторы", 'author', df_authors, selected_authors) }}
+                {{ filter("Издательство", 'publisher', df_publishers, selected_publishers) }}
+                <div class="action-btn-container">
+                    <input class="btn" type="submit" value="Найти">
+                    <a class="btn" href="{{ url_for('search') }}">Очистить</a>
+                </div>
+
+            </form>
+        </div>
+        <div class="search-content">
+            <a class="btn justify-start" href="{{ url_for("index",  reader=session['reader_id']) }}">Не выбирать
+                книгу</a>
+            <div class="filter-result">
+                {{ filtered_values('Жанры', df_genres, selected_genres) }}
+                {{ filtered_values('Авторы', df_authors, selected_authors) }}
+                {{ filtered_values('Издательства',df_publishers, selected_publishers) }}
+            </div>
+
+            <div class="books-table">
+                {% for i in  df_books.index %}
+                    {% set iter = df_books.loc[i] %}
+                    {{ book(df_books.dtypes.index, iter) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

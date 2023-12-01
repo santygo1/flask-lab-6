@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{# imports #}
+
+{% block title %} Новый читатель {% endblock title %}
+
+{% block menu %}{{ menu.menu_title("Новый читатель") }}{% endblock menu %}
+{% block content %}
+
+    <form id="create-user-form" method="post" action="{{ url_for('create_reader')}}">
+        <label> Имя читателя:
+            <input name="reader_name" value="" required>
+        </label>
+    </form>
+
+    <div class="action-btn-container">
+        <input class="btn" type="submit" value="Добавить" form="create-user-form">
+        <a class="btn" href="{{ url_for("index") }}">Отмена</a>
+    </div>
+{% endblock content %}
